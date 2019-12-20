@@ -49,6 +49,7 @@ public class MainActivity extends AppCompatActivity {
 
         } else {
             // Permission has already been granted
+            init();
         }
 
 
@@ -71,8 +72,8 @@ public class MainActivity extends AppCompatActivity {
 
         telephonyManager = (TelephonyManager)getSystemService(Context.TELEPHONY_SERVICE);
         Log.v("brad", telephonyManager.getImei());
-//        Log.v("brad", telephonyManager.getMeid());
-//        Log.v("brad", telephonyManager.getSubscriberId());
+        Log.v("brad", telephonyManager.getMeid());
+        Log.v("brad", telephonyManager.getSubscriberId());
 
 
     }
