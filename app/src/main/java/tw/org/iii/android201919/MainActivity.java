@@ -15,12 +15,14 @@ import android.net.ConnectivityManager;
 import android.net.Network;
 import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.telephony.TelephonyManager;
 import android.util.Log;
 
 import java.net.NetworkInterface;
 
 public class MainActivity extends AppCompatActivity {
     private ConnectivityManager connectivityManager;
+    private TelephonyManager telephonyManager;
     private MyReceiver myReceiver;
 
     @Override
@@ -66,6 +68,11 @@ public class MainActivity extends AppCompatActivity {
         myReceiver = new MyReceiver();
         IntentFilter filter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
         registerReceiver(myReceiver, filter);
+
+        telephonyManager = (TelephonyManager)getSystemService(Context.TELEPHONY_SERVICE);
+        Log.v("brad", telephonyManager.getImei());
+
+
     }
 
 
