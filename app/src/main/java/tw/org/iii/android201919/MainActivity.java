@@ -40,13 +40,25 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private boolean isConnectNetwork(){
+        boolean ret = false;
         NetworkInfo info = connectivityManager.getActiveNetworkInfo();
-        return info.isConnected();
+        if (info == null){
+            ret = false;
+        }else{
+            ret = info.isConnected();
+        }
+        return ret;
     }
 
     private boolean isWifiConnect(){
+        boolean ret = false;
         NetworkInfo info = connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
-        return info.isConnected();
+        if (info == null){
+            ret = false;
+        }else{
+            ret = info.isConnected();
+        }
+        return ret;
     }
 
     private class MyReceiver extends BroadcastReceiver {
