@@ -1,11 +1,16 @@
 package tw.org.iii.android201919;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
+import android.Manifest;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.pm.PackageManager;
 import android.net.ConnectivityManager;
 import android.net.Network;
 import android.net.NetworkInfo;
@@ -23,6 +28,37 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        if (ContextCompat.checkSelfPermission(this,
+                Manifest.permission.READ_CONTACTS)
+                != PackageManager.PERMISSION_GRANTED ||
+                ContextCompat.checkSelfPermission(this,
+                        Manifest.permission.READ_PHONE_STATE)
+                        != PackageManager.PERMISSION_GRANTED ||
+                ContextCompat.checkSelfPermission(this,
+                        Manifest.permission.READ_CALL_LOG)
+                        != PackageManager.PERMISSION_GRANTED
+        ) {
+
+                ActivityCompat.requestPermissions(this,
+                        new String[]{Manifest.permission.READ_CONTACTS,
+                                Manifest.permission.READ_PHONE_STATE,
+                                Manifest.permission.READ_CALL_LOG,},
+                        123);
+
+        } else {
+            // Permission has already been granted
+        }
+
+
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        init();
+    }
+
+    private void init(){
         connectivityManager = (ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
         Log.v("brad", "network = " + isConnectNetwork());
         Log.v("brad", "wifi = " + isWifiConnect());
@@ -30,8 +66,8 @@ public class MainActivity extends AppCompatActivity {
         myReceiver = new MyReceiver();
         IntentFilter filter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
         registerReceiver(myReceiver, filter);
-
     }
+
 
     @Override
     public void finish() {
