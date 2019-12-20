@@ -62,8 +62,8 @@ public class MainActivity extends AppCompatActivity {
 
     private void init(){
         connectivityManager = (ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
-        Log.v("brad", "network = " + isConnectNetwork());
-        Log.v("brad", "wifi = " + isWifiConnect());
+//        Log.v("brad", "network = " + isConnectNetwork());
+//        Log.v("brad", "wifi = " + isWifiConnect());
 
         myReceiver = new MyReceiver();
         IntentFilter filter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
@@ -71,6 +71,8 @@ public class MainActivity extends AppCompatActivity {
 
         telephonyManager = (TelephonyManager)getSystemService(Context.TELEPHONY_SERVICE);
         Log.v("brad", telephonyManager.getImei());
+//        Log.v("brad", telephonyManager.getMeid());
+//        Log.v("brad", telephonyManager.getSubscriberId());
 
 
     }
@@ -107,8 +109,8 @@ public class MainActivity extends AppCompatActivity {
     private class MyReceiver extends BroadcastReceiver {
         @Override
         public void onReceive(Context context, Intent intent) {
-            Log.v("brad", "network = " + isConnectNetwork());
-            Log.v("brad", "wifi = " + isWifiConnect());
+//            Log.v("brad", "network = " + isConnectNetwork());
+//            Log.v("brad", "wifi = " + isWifiConnect());
         }
     }
 
