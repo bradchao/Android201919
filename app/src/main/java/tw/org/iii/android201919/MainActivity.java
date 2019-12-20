@@ -2,7 +2,10 @@ package tw.org.iii.android201919;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.net.ConnectivityManager;
 import android.net.Network;
 import android.net.NetworkInfo;
@@ -13,6 +16,7 @@ import java.net.NetworkInterface;
 
 public class MainActivity extends AppCompatActivity {
     private ConnectivityManager connectivityManager;
+    private MyReceiver myReceiver;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,6 +26,17 @@ public class MainActivity extends AppCompatActivity {
         connectivityManager = (ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
         Log.v("brad", "network = " + isConnectNetwork());
         Log.v("brad", "wifi = " + isWifiConnect());
+
+        myReceiver = new MyReceiver();
+        IntentFilter filter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
+        registerReceiver(myReceiver, filter);
+
+    }
+
+    @Override
+    public void finish() {
+        super.finish();
+        unregisterReceiver(myReceiver);
     }
 
     private boolean isConnectNetwork(){
@@ -32,6 +47,14 @@ public class MainActivity extends AppCompatActivity {
     private boolean isWifiConnect(){
         NetworkInfo info = connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
         return info.isConnected();
+    }
+
+    private class MyReceiver extends BroadcastReceiver {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            Log.v("brad", "network = " + isConnectNetwork());
+            Log.v("brad", "wifi = " + isWifiConnect());
+        }
     }
 
 }
